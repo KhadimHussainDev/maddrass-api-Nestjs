@@ -1,0 +1,42 @@
+### Create new Student
+POST http://localhost:3000/students
+Content-Type : application/json
+
+{
+  "name": "string",
+  "cnic": "string",
+  "fatherName": "string",
+  "fatherCnic": "string",
+  "guardianName": "string",
+  "guardianCnic": "string",
+  "bloodGroup": "string",
+  "qualification": "string",
+  "type": "string",
+  "dateOfBirth": "2024-06-23",
+  "image": "string",
+  "contacts": [
+    {"phone" : "0300"}
+  ],
+  "addresses": [
+    {
+      "type": "string",
+      "addressText": "aaa",
+      "tehsil": "string",
+      "district": "string"
+    }
+  ],
+  "admissions": [{
+    "admissionDate": "2024-06-23",
+    "department": "string",
+    "admissionFee": 0,
+    "receiptNumber": "string",
+    "bookNumber": "string",
+    "terminationDate": "2024-06-23",
+    "terminationReason": "string"
+  }],
+  "additionalProp1": {}
+}
+
+
+### Get a student with its id
+GET http://localhost:3000/students/10

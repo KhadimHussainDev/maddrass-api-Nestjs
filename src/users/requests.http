@@ -1,0 +1,33 @@
+### Ping
+GET http://localhost:3000/ping
+
+
+### Who Am I 
+GET http://localhost:3000/whoami
+
+
+### Sign up
+POST  http://localhost:3000/signup
+Content-Type: application/json
+
+{
+  "username" : "123",
+  "email" : "khadim@test.com",
+  "password" : "12"
+}
+
+### Sign in
+POST  http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username" : "123",
+  "email" : "khadim@test.com",
+  "password" : "12"
+}
+
+
+### Sign out
+POST  http://localhost:3000/signout
+
+

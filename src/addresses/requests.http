@@ -1,0 +1,3 @@
+### Get an address with student id
+GET http://localhost:3000/addresses/38
+
