@@ -2,7 +2,7 @@ import { BadRequestException, Injectable } from '@nestjs/common';
 import { CreateAddressDto } from './dtos/create-address.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Address } from './entities/addresses.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { Student } from '../students/entities/students.entity';
 
 
@@ -16,10 +16,15 @@ export class AddressesService {
     if (!id) return null;
     return this.repo.findOneBy({ id });
   }
-  async create(address: CreateAddressDto, student: Student) {
-    const addressObj = await this.repo.create(address);
+  async create(
+    address: CreateAddressDto,
+    student: Student,
+    manager?: EntityManager,
+  ) {
+    const addressObj = this.repo.create(address);
     addressObj.student = student;
-    return this.repo.save(addressObj);
+    const repository = manager ? manager.getRepository(Address) : this.repo;
+    return repository.save(addressObj);
   }
 
   async update(id: number, attrs: Partial<Address>) {

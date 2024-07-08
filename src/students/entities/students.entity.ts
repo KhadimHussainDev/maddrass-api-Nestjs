@@ -2,7 +2,13 @@ import { Constants } from '../../Constants/Constants';
 import { Address } from '../../addresses/entities/addresses.entity';
 import { Admission } from '../../admissions/entities/admissions.entity';
 import { Contact } from '../../contacts/entities/contacts.entity';
-import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { Enrollment } from '../../enrollment/entities/enrollment.entity';
 
 @Entity()
@@ -43,15 +49,27 @@ export class Student {
   @Column()
   image: string;
 
-  @OneToMany(() => Address, (address) => address.student)
+  @OneToMany(() => Address, (address) => address.student, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   addresses: Address[];
 
-  @OneToMany(() => Contact, (contact) => contact.student)
+  @OneToMany(() => Contact, (contact) => contact.student, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   contacts: Contact[];
 
-  @OneToMany(() => Admission, (admission) => admission.student)
+  @OneToMany(() => Admission, (admission) => admission.student, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   admissions: Admission[];
 
-  @OneToMany(() => Enrollment, (enrollment) => enrollment.student)
+  @OneToMany(() => Enrollment, (enrollment) => enrollment.student, {
+    cascade: true,
+    onDelete: 'CASCADE',
+  })
   enrollments: Enrollment[];
 }

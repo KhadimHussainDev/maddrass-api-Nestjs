@@ -73,7 +73,7 @@ export class ExamsService {
     }
   }
 
-  async findExamsByCourse(clazzCourseId: number): Promise<Exam[]> {
+  async findExamsByClazzCourse(clazzCourseId: number): Promise<Exam[]> {
     return await this.repo.find({
       where: { clazzCourse: { id: clazzCourseId } },
       relations: ['results'],

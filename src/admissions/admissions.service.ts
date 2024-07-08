@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Admission } from './entities/admissions.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { CreateAdmissionDto } from './dtos/create-admission.dto';
 import { Student } from '../students/entities/students.entity';
 import { TerminationDto } from './dtos/termination.dto';
@@ -17,10 +17,15 @@ export class AdmissionsService {
     if (!id) return null;
     return this.repo.findOneBy({ id });
   }
-  async create(admission: CreateAdmissionDto, student: Student) {
+  async create(
+    admission: CreateAdmissionDto,
+    student: Student,
+    manager?: EntityManager,
+  ) {
     const admissionObj = this.repo.create(admission);
     admissionObj.student = student;
-    return this.repo.save(admissionObj);
+    const repository = manager ? manager.getRepository(Admission) : this.repo;
+    return repository.save(admissionObj);
   }
 
   async update(admission: Admission, attrs: Partial<Admission>) {
@@ -86,9 +91,8 @@ export class AdmissionsService {
     if (admission && admission.department === terminationDto.department) {
       // Object.assign(admission, terminationDto);
       return this.update(admission, terminationDto);
-    }
-    else{
-      throw new BadRequestException(Constants.TERMINATION_FAILED)
+    } else {
+      throw new BadRequestException(Constants.TERMINATION_FAILED);
     }
   }
 }

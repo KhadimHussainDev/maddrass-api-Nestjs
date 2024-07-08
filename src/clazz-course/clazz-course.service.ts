@@ -15,7 +15,7 @@ import { ClazzYearService } from '../clazz-year/clazz-year.service';
 export class ClazzCourseService {
   constructor(
     @InjectRepository(ClazzCourse) private repo: Repository<ClazzCourse>,
-    private clazzYearService:  ClazzYearService,
+    private clazzYearService: ClazzYearService,
     private coursesService: CoursesService,
   ) {}
 
@@ -39,16 +39,20 @@ export class ClazzCourseService {
   }
 
   async findOne(id: number) {
-    const clazzCourse = await this.repo.findOneBy({ id });
+    const clazzCourse = await this.repo.findOne({
+      where: { id },
+      relations: ['course', 'clazzYear'],
+    });
     if (!clazzCourse) {
       throw new NotFoundException(`ClazzCourse with ID ${id} not found`);
     }
+
     return clazzCourse;
   }
 
   async findAll() {
     return this.repo.find({
-      relations: ['clazz', 'course', 'enrollments', 'exams'],
+      relations: ['course', 'clazzYear'],
     });
   }
 
@@ -84,15 +88,18 @@ export class ClazzCourseService {
     return this.repo.remove(clazzCourse);
   }
 
-  async findByClazz(clazzId: number): Promise<ClazzCourse[]> {
+  async findByClazzYear(clazzId: number): Promise<ClazzCourse[]> {
     return this.repo.find({
       where: { clazzYear: { id: clazzId } },
-      relations: ['course', 'enrollments', 'exams'],
+      relations: ['course', 'clazzYear'],
     });
   }
 
   async findExamsForClazzCourse(clazzCourseId: number) {
-    const clazzCourse = await this.findOne(clazzCourseId);
+    const clazzCourse = await this.repo.findOne({
+      where: { id: clazzCourseId },
+      relations: ['exams'],
+    });
     return clazzCourse.exams;
   }
 }

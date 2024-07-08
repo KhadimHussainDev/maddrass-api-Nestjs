@@ -71,7 +71,7 @@ export class EnrollmentService {
   }
 
   async findOne(id: number): Promise<Enrollment> {
-    const enrollment = await this.repo.findOneBy({ id });
+    const enrollment = await this.repo.findOne({where : { id },relations : ['student']});
     if (!enrollment) {
       throw new NotFoundException(`Enrollment with ID ${id} not found`);
     }
@@ -92,7 +92,7 @@ export class EnrollmentService {
   async findByStudent(studentId: number): Promise<Enrollment[]> {
     return this.repo.find({
       where: { student: { id: studentId } },
-      relations: ['clazzCourse', 'results'],
+      relations: ['student','clazzCourse', 'results'],
     });
   }
 

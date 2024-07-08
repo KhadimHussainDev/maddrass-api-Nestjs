@@ -18,6 +18,8 @@ export class Address {
   @Column()
   district: string;
 
-  @ManyToOne(() => Student, (student) => student.addresses)
+  @ManyToOne(() => Student, (student) => student.addresses, {
+    onDelete: 'CASCADE',
+  })
   student: Student;
 }

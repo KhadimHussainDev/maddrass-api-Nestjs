@@ -1,7 +1,7 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Contact } from './entities/contacts.entity';
-import { Repository } from 'typeorm';
+import { EntityManager, Repository } from 'typeorm';
 import { CreateContactDto } from './dtos/create-contact.dto';
 import { Student } from '../students/entities/students.entity';
 
@@ -13,10 +13,15 @@ export class ContactsService {
     if (!id) return null;
     return this.repo.findOneBy({ id });
   }
-  async create(contact: CreateContactDto, student: Student) {
+  async create(
+    contact: CreateContactDto,
+    student: Student,
+    manager?: EntityManager,
+  ) {
     const contactObj = this.repo.create(contact);
     contactObj.student = student;
-    return this.repo.save(contactObj);
+    const repository = manager ? manager.getRepository(Contact) : this.repo;
+    return repository.save(contactObj);
   }
 
   async update(id: number, attrs: Partial<Contact>) {

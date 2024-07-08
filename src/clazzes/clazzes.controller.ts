@@ -23,7 +23,6 @@ export class ClazzesController {
 
   @Post()
   addClass(@Body() classDto: CreateClazzDto) {
-    console.log(classDto);
     return this.clazzesService.create(classDto);
   }
 

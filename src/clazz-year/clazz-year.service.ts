@@ -37,11 +37,14 @@ export class ClazzYearService {
   }
 
   async findOne(id: number) {
-    return this.repo.findOneBy({ id });
+    return this.repo.findOne({
+      where: { id },
+      relations: ['clazz'],
+    });
   }
 
   async findAll() {
-    return this.repo.find();
+    return this.repo.find({ relations: ['clazz'] });
   }
 
   async update(id: number, updateClazzYearDto: UpdateClazzYearDto) {
@@ -58,7 +61,7 @@ export class ClazzYearService {
     if (!clazzYear) {
       throw new Error('ClazzYear not found');
     }
-    await this.repo.remove(clazzYear);
+    return await this.repo.remove(clazzYear);
   }
 
   async findByYear(year: number): Promise<ClazzYear[]> {

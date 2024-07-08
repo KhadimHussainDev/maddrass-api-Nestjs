@@ -16,10 +16,12 @@ export class Enrollment {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({default : Constants.REGISTERED})
-  status : string
+  @Column({ default: Constants.REGISTERED })
+  status: string;
 
-  @ManyToOne(() => Student, (student) => student.enrollments)
+  @ManyToOne(() => Student, (student) => student.enrollments, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'student_id' })
   student: Student;
 

@@ -5,18 +5,11 @@ GET http://localhost:3000/ping
 ### Who Am I 
 GET http://localhost:3000/whoami
 
+GET http://localhost:3000/
+
+
 
 ### Sign up
-POST  http://localhost:3000/signup
-Content-Type: application/json
-
-{
-  "username" : "123",
-  "email" : "khadim@test.com",
-  "password" : "12"
-}
-
-### Sign in
 POST  http://localhost:3000/login
 Content-Type: application/json
 
@@ -26,8 +19,32 @@ Content-Type: application/json
   "password" : "12"
 }
 
+### Sign in
+POST  http://localhost:3000/refresh
+Content-Type: application/json
+
+{
+  "token" : "ea38167f-412b-47be-bc1e-e04888d00584"
+}
+
 
 ### Sign out
 POST  http://localhost:3000/signout
 
 
+## Refresh Token
+POST  http://localhost:3000/refresh
+Content-Type: application/json
+
+{
+  "token" : "123"
+}
+
+POST  http://localhost:3000/login
+Content-Type: application/json
+
+{
+  "username" : "123",
+  "email" : "khadim@test.com",
+  "password" : "12"
+}

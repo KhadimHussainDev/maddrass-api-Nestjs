@@ -7,7 +7,6 @@ import { AuthGuard } from '../users/guards/auth.guard';
 export class AddressesController {
   constructor(private addressesService: AddressesService) {}
 
- 
   @Get('students/:id/addresses')
   findAddress(@Param('id') id: string) {
     return this.addressesService.getAddressesByStudentId(parseInt(id));

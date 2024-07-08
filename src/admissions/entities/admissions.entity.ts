@@ -27,6 +27,8 @@ export class Admission {
   @Column()
   terminationReason: string;
 
-  @ManyToOne(() => Student, (student) => student.admissions)
+  @ManyToOne(() => Student, (student) => student.admissions, {
+    onDelete: 'CASCADE',
+  })
   student: Student;
 }

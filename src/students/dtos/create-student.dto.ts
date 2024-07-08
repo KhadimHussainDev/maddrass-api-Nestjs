@@ -44,6 +44,7 @@ export class CreateStudentDto {
   @IsArray()
   contacts: CreateContactDto[];
 
-  @IsString()
+  @IsOptional()
+  @IsArray()
   admissions: CreateAdmissionDto[];
 }

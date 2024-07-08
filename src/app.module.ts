@@ -3,7 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { User } from './users/users.entity';
+import { User } from './users/entities/users.entity';
 import { CoursesModule } from './courses/courses.module';
 import { AddressesModule } from './addresses/addresses.module';
 import { ContactsModule } from './contacts/contacts.module';
@@ -26,9 +26,13 @@ import { ResultsModule } from './results/results.module';
 import { Result } from './results/entities/results.entity';
 import { ExamsModule } from './exams/exams.module';
 import { Exam } from './exams/entities/exams.entity';
+import { JwtModule } from '@nestjs/jwt';
+import { AuthGuard } from './users/guards/auth.guard';
 
 @Module({
   imports: [
+    //Todo: make env file and set privte things there
+    JwtModule.register({ global: true, secret: '123' }),
     UsersModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
@@ -51,7 +55,7 @@ import { Exam } from './exams/entities/exams.entity';
         Result,
         Exam,
       ],
-      autoLoadEntities : true,
+      autoLoadEntities: true,
       synchronize: true,
     }),
     CoursesModule,

@@ -10,8 +10,8 @@ export class UpdateExamDto {
   totalMarks?: number;
 
   @IsOptional()
-  @IsDate()
-  date?: Date;
+  @IsString()
+  date?: string;
 
   @IsOptional()
   @IsString()
