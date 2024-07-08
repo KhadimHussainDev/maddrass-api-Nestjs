@@ -27,20 +27,24 @@ import { Result } from './results/entities/results.entity';
 import { ExamsModule } from './exams/exams.module';
 import { Exam } from './exams/entities/exams.entity';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthGuard } from './users/guards/auth.guard';
+import { ConfigModule } from '@nestjs/config';
+
 
 @Module({
   imports: [
-    //Todo: make env file and set privte things there
-    JwtModule.register({ global: true, secret: '123' }),
+    ConfigModule.forRoot({ isGlobal: true }),
+    JwtModule.register({
+      global: true,
+      secret: process.env.JWT_SECRET,
+    }),
     UsersModule,
     TypeOrmModule.forRoot({
       type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'Khadim',
-      password: 'admin',
-      database: 'db',
+      host: process.env.DB_HOST,
+      port: parseInt(process.env.DB_PORT, 10),
+      username: process.env.DB_USERNAME,
+      password: process.env.DB_PASSWORD,
+      database: process.env.DB_DATABASE,
       entities: [
         User,
         Address,
